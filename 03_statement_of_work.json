@@ -1,0 +1,465 @@
+{
+  "sow": {
+    "project_name": "High-Availability E-Commerce Platform (EU Region)",
+    "project_code": "ECOM-2026-Q2",
+    "start_date": "2026-06-01",
+    "end_date": "2026-08-10",
+    "duration_weeks": 10,
+    "client_email": "ratthanin.pu@gmail.com",
+    "objective": "Design and deploy a scalable, secure, and GDPR-compliant e-commerce platform on AWS supporting 10,000 concurrent users, 1 million product catalog, real-time inventory synchronization, and 99.95% uptime SLA.",
+    "success_criteria": [
+      "Architecture approved by security team before week 2",
+      "99.95% uptime achieved in production (≤22 minutes downtime/month)",
+      "Sub-200ms p99 latency at 10K concurrent users verified via load testing",
+      "Real-time inventory sync with <500ms latency",
+      "GDPR compliance verified (data residency, audit logging, DPA)",
+      "SOC 2 Type II controls documented and operational",
+      "Monthly infrastructure cost ≤$30,000",
+      "95% of infrastructure defined as code (Terraform)",
+      "Incident response runbooks completed before go-live"
+    ],
+    "deliverables": [
+      {
+        "id": "D1",
+        "name": "Architecture Design Document",
+        "description": "Comprehensive technical architecture specification including service selection rationale, network design, security posture, compliance mapping, cost analysis, and implementation roadmap",
+        "due_date": "2026-06-14",
+        "phase": "Phase 1",
+        "owner": "Solutions Architect",
+        "acceptance_criteria": [
+          "Document covers all 9 AWS service components",
+          "Security & compliance sections address GDPR and SOC 2",
+          "Cost model within ±15% of actual",
+          "Stakeholder sign-off obtained"
+        ]
+      },
+      {
+        "id": "D2",
+        "name": "Infrastructure as Code (Terraform Modules)",
+        "description": "Production-ready Terraform modules for VPC, EC2, RDS, ElastiCache, OpenSearch, ALB, KMS, CloudTrail, CloudWatch, and deployment automation scripts",
+        "due_date": "2026-06-28",
+        "phase": "Phase 2",
+        "owner": "DevOps Engineer",
+        "acceptance_criteria": [
+          "All modules tested in staging environment",
+          "100% of infrastructure defined in code",
+          "Variables documented (terraform.tfvars)",
+          "State management configured (S3 backend with locking)"
+        ]
+      },
+      {
+        "id": "D3",
+        "name": "Application API & Core Services",
+        "description": "RESTful API implementation including user authentication, product catalog search, shopping cart, order management, inventory sync service, and payment processing integration",
+        "due_date": "2026-07-19",
+        "phase": "Phase 3",
+        "owner": "Full Stack Engineers (4)",
+        "acceptance_criteria": [
+          "API specification (OpenAPI 3.0) documented",
+          "Unit test coverage ≥80%",
+          "Integration tests passing for all critical paths",
+          "Performance benchmarks validated (P50, P95, P99 latencies)"
+        ]
+      },
+      {
+        "id": "D4",
+        "name": "Security & Compliance Validation",
+        "description": "OWASP Top 10 security testing, penetration testing results, GDPR compliance checklist, SOC 2 Type II control documentation, and security hardening recommendations",
+        "due_date": "2026-08-02",
+        "phase": "Phase 4",
+        "owner": "Security Engineer",
+        "acceptance_criteria": [
+          "No Critical or High severity vulnerabilities found",
+          "Penetration test report signed off",
+          "GDPR compliance verified (data residency, encryption, audit logs)",
+          "SOC 2 control evidence collected"
+        ]
+      },
+      {
+        "id": "D5",
+        "name": "Load & Performance Testing Report",
+        "description": "Load test results at 10K, 15K, and 20K concurrent users; failover testing; database performance analysis; cache effectiveness; recommendations for optimization",
+        "due_date": "2026-08-02",
+        "phase": "Phase 4",
+        "owner": "QA / Performance Engineer",
+        "acceptance_criteria": [
+          "10K concurrent users sustained for 30 minutes",
+          "P99 latency <200ms verified",
+          "RDS failover causes <3 minutes downtime",
+          "Cache hit ratio >85% for product queries"
+        ]
+      },
+      {
+        "id": "D6",
+        "name": "Operational Runbooks & Incident Response Playbook",
+        "description": "Comprehensive documentation covering deployment procedures, rollback procedures, on-call playbooks, common issues and troubleshooting, disaster recovery procedures, and team training materials",
+        "due_date": "2026-08-09",
+        "phase": "Phase 4",
+        "owner": "Senior DevOps Engineer",
+        "acceptance_criteria": [
+          "Runbooks cover >20 common scenarios",
+          "Incident response SOP documented",
+          "All team members trained and signed off",
+          "RTO/RPO defined for each critical service"
+        ]
+      },
+      {
+        "id": "D7",
+        "name": "Cost Model & Optimization Report",
+        "description": "Detailed monthly cost breakdown by service, cost optimization recommendations (Reserved Instances, Spot pricing, consolidation), and growth scenarios (2x, 5x scale)",
+        "due_date": "2026-08-02",
+        "phase": "Phase 4",
+        "owner": "Solutions Architect",
+        "acceptance_criteria": [
+          "Current state OpEx breakdown itemized",
+          "Optimization options with ROI calculated",
+          "Growth scenarios showing cost at 2x and 5x scale",
+          "Reserved Instance recommendations with payback period"
+        ]
+      },
+      {
+        "id": "D8",
+        "name": "Go-Live Checklist & Cutover Plan",
+        "description": "DNS migration plan, traffic switch procedure, health check validation, rollback procedure, and post-go-live support schedule",
+        "due_date": "2026-08-09",
+        "phase": "Phase 4",
+        "owner": "DevOps Lead",
+        "acceptance_criteria": [
+          "DNS cutover plan validated",
+          "Health checks confirmed operational",
+          "Rollback procedure tested",
+          "On-call team trained"
+        ]
+      }
+    ],
+    "timeline": {
+      "start_date": "2026-06-01",
+      "end_date": "2026-08-10",
+      "total_weeks": 10,
+      "phases": [
+        {
+          "phase_id": "P1",
+          "name": "Phase 1: Design & Planning",
+          "description": "Architecture review, security assessment, compliance validation, cost approval, and team preparation",
+          "start_date": "2026-06-01",
+          "end_date": "2026-06-14",
+          "duration_weeks": 2,
+          "deliverables": ["D1"],
+          "team_members": 2,
+          "team_roles": ["Solutions Architect", "Security Engineer"],
+          "tasks": [
+            "Architecture review meeting with stakeholders",
+            "Security risk assessment and threat modeling",
+            "GDPR compliance gap analysis",
+            "Cost model finalization and approval",
+            "Team skill assessment and training plan"
+          ],
+          "success_criteria": [
+            "Architecture approved by stakeholders",
+            "Security and compliance risks identified and mitigated",
+            "Budget approved",
+            "Team prepared for Phase 2"
+          ]
+        },
+        {
+          "phase_id": "P2",
+          "name": "Phase 2: Infrastructure Deployment",
+          "description": "VPC, networking, security groups, IAM, databases, caching, search, monitoring, and backup infrastructure setup via Terraform",
+          "start_date": "2026-06-15",
+          "end_date": "2026-06-28",
+          "duration_weeks": 2,
+          "deliverables": ["D2"],
+          "team_members": 3,
+          "team_roles": ["DevOps Lead", "DevOps Engineer", "Solutions Architect"],
+          "tasks": [
+            "VPC, subnets, NAT gateways, route tables",
+            "Security groups and NACLs",
+            "IAM roles, policies, and assume role relationships",
+            "KMS keys and key policies",
+            "ALB with target groups and health checks",
+            "RDS Aurora multi-AZ setup with read replica",
+            "ElastiCache Redis cluster with replication",
+            "OpenSearch domain with appropriate shard allocation",
+            "S3 buckets with encryption and versioning",
+            "CloudTrail, CloudWatch Logs, VPC Flow Logs",
+            "Infrastructure testing and validation"
+          ],
+          "success_criteria": [
+            "All infrastructure deployed and tested",
+            "Terraform modules working correctly",
+            "Security groups and IAM policies validated",
+            "RDS and cache failover tested"
+          ]
+        },
+        {
+          "phase_id": "P3",
+          "name": "Phase 3: Application Development",
+          "description": "API development, business logic, payment integration, admin dashboard, and integration with AWS services",
+          "start_date": "2026-06-29",
+          "end_date": "2026-07-26",
+          "duration_weeks": 4,
+          "deliverables": ["D3"],
+          "team_members": 4,
+          "team_roles": ["Full Stack Engineer", "Full Stack Engineer", "Full Stack Engineer", "QA Engineer"],
+          "tasks": [
+            "User authentication and session management (JWT + Redis)",
+            "Product catalog API with pagination and full-text search",
+            "Shopping cart with Redis persistence",
+            "Inventory sync service (SQS consumer + Lambda)",
+            "Order creation and management",
+            "Stripe payment integration with webhook handlers",
+            "Admin dashboard and analytics",
+            "Error handling, logging, and monitoring",
+            "Unit tests (≥80% coverage)",
+            "Integration tests",
+            "API documentation (OpenAPI)"
+          ],
+          "success_criteria": [
+            "All core APIs implemented and tested",
+            "Unit test coverage ≥80%",
+            "Integration tests passing",
+            "API documentation complete"
+          ]
+        },
+        {
+          "phase_id": "P4",
+          "name": "Phase 4: Testing & Hardening",
+          "description": "Load testing, security testing, failover testing, performance tuning, documentation, and go-live preparation",
+          "start_date": "2026-07-27",
+          "end_date": "2026-08-10",
+          "duration_weeks": 2,
+          "deliverables": ["D4", "D5", "D6", "D7", "D8"],
+          "team_members": 4,
+          "team_roles": ["QA Engineer", "Security Engineer", "DevOps Lead", "Solutions Architect"],
+          "tasks": [
+            "Load testing at 10K, 15K, 20K concurrent users",
+            "Failover testing (RDS, ElastiCache, EC2)",
+            "Security testing (OWASP Top 10, penetration test)",
+            "Performance optimization and tuning",
+            "GDPR compliance verification",
+            "SOC 2 control validation",
+            "Operational runbooks documentation",
+            "Incident response playbook",
+            "Cost analysis and optimization report",
+            "Go-live checklist and cutover plan",
+            "Team training and on-call rotation setup",
+            "Production cutover and monitoring"
+          ],
+          "success_criteria": [
+            "Load testing confirms 99.95% uptime capability",
+            "Security testing: no Critical/High vulnerabilities",
+            "GDPR and SOC 2 compliance verified",
+            "Runbooks and playbooks completed",
+            "Team trained and ready for production support"
+          ]
+        }
+      ]
+    },
+    "budget": {
+      "currency": "USD",
+      "budget_period": "10 weeks",
+      "infrastructure_monthly_usd": 3506,
+      "team_cost_monthly_usd": 40000,
+      "blended_monthly_usd": 43506,
+      "total_10week_usd": 108650,
+      "contingency_pct": 10,
+      "contingency_usd": 10865,
+      "total_with_contingency_usd": 119515,
+      "cost_breakdown": {
+        "compute": {
+          "alb": 16,
+          "ec2_autoscaling": 300,
+          "total": 316
+        },
+        "data": {
+          "rds_aurora": 1200,
+          "elasticache_redis": 350,
+          "opensearch": 500,
+          "total": 2050
+        },
+        "storage": {
+          "s3": 200,
+          "backup_vault": 150,
+          "total": 350
+        },
+        "networking": {
+          "cloudfront": 200,
+          "nat_gateway": 100,
+          "data_transfer": 100,
+          "route53": 50,
+          "total": 450
+        },
+        "integration": {
+          "sqs": 50,
+          "lambda": 20,
+          "sns": 10,
+          "total": 80
+        },
+        "security": {
+          "kms": 100,
+          "waf": 40,
+          "total": 140
+        },
+        "monitoring": {
+          "cloudwatch": 200,
+          "cloudtrail": 50,
+          "total": 250
+        },
+        "other": {
+          "systems_manager": 30,
+          "miscellaneous": 40,
+          "total": 70
+        },
+        "monthly_infrastructure_total": 3506
+      },
+      "team_cost": {
+        "senior_architect": 15000,
+        "devops_engineer": 12000,
+        "fullstack_engineer": 10000,
+        "qa_engineer": 10000,
+        "monthly_total": 47000,
+        "note": "Team cost amortized; actual may be lower post-launch"
+      }
+    },
+    "resource_allocation": [
+      {
+        "phase": "Phase 1",
+        "role": "Solutions Architect",
+        "fte": 1.0,
+        "responsibilities": [
+          "Architecture design and documentation",
+          "Stakeholder communication",
+          "Cost model validation"
+        ]
+      },
+      {
+        "phase": "Phase 1",
+        "role": "Security Engineer",
+        "fte": 0.5,
+        "responsibilities": [
+          "Security risk assessment",
+          "GDPR compliance review",
+          "Threat modeling"
+        ]
+      },
+      {
+        "phase": "Phase 2",
+        "role": "DevOps Lead",
+        "fte": 1.0,
+        "responsibilities": [
+          "Infrastructure architecture and design",
+          "Terraform module development",
+          "CI/CD pipeline setup"
+        ]
+      },
+      {
+        "phase": "Phase 2",
+        "role": "DevOps Engineer",
+        "fte": 1.0,
+        "responsibilities": [
+          "Infrastructure deployment",
+          "Security group and IAM configuration",
+          "Monitoring and alerting setup"
+        ]
+      },
+      {
+        "phase": "Phase 3-4",
+        "role": "Full Stack Engineer (3x)",
+        "fte": 3.0,
+        "responsibilities": [
+          "API development",
+          "Application logic implementation",
+          "Integration with AWS services",
+          "Testing and debugging"
+        ]
+      },
+      {
+        "phase": "Phase 4",
+        "role": "QA Engineer",
+        "fte": 1.0,
+        "responsibilities": [
+          "Load testing",
+          "Security testing",
+          "Failover testing",
+          "Documentation"
+        ]
+      }
+    ],
+    "assumptions": [
+      "Application code written in Node.js or Python (stateless, 12-factor compliant)",
+      "Database: PostgreSQL 14+ (Aurora compatible)",
+      "Payment processor: Stripe (managed externally)",
+      "Peak load: 10K concurrent users = ~50 req/sec baseline",
+      "Product catalog: 1M products with minimal daily updates",
+      "Data residency: EU-WEST-1 (Ireland) only; no multi-region until post-launch",
+      "Team: 4 full-time engineers with basic AWS knowledge",
+      "No legacy systems to migrate; greenfield development",
+      "Budget includes infrastructure and team costs only (no hardware, software licenses)"
+    ],
+    "constraints": [
+      "Budget ceiling: $30,000/month (after launch)",
+      "Timeline: 10 weeks from architecture approval to production",
+      "Data residency: EU-WEST-1 (Ireland) only",
+      "Team: 4 engineers maximum (no additional contractors)",
+      "SLA: 99.95% uptime minimum",
+      "Compliance: GDPR + SOC 2 Type II required",
+      "Payment: Stripe API (no custom payment processor)"
+    ],
+    "risks_and_mitigations": [
+      {
+        "risk_id": "R1",
+        "risk_name": "Tight 10-week timeline",
+        "probability": "Medium",
+        "impact": "High",
+        "mitigation": "Weekly progress reviews; parallel Phase 2 + Phase 3 work starting week 3; pre-staging of non-blocking tasks"
+      },
+      {
+        "risk_id": "R2",
+        "risk_name": "Infrastructure code quality issues",
+        "probability": "Medium",
+        "impact": "Medium",
+        "mitigation": "Code review process for Terraform; infrastructure testing in staging; automated validation with terraform plan"
+      },
+      {
+        "risk_id": "R3",
+        "risk_name": "Performance degradation under 10K load",
+        "probability": "Low",
+        "impact": "Critical",
+        "mitigation": "Load testing in week 9 at 15K users; database query optimization; caching strategy validation"
+      },
+      {
+        "risk_id": "R4",
+        "risk_name": "GDPR compliance gaps",
+        "probability": "Low",
+        "impact": "Critical",
+        "mitigation": "GDPR consultant review (optional); CloudTrail validation; data residency verification before go-live"
+      },
+      {
+        "risk_id": "R5",
+        "risk_name": "Team turnover or unavailability",
+        "probability": "Low",
+        "impact": "Medium",
+        "mitigation": "Documentation throughout project; knowledge sharing sessions; cross-training on critical components"
+      }
+    ],
+    "acceptance_criteria": [
+      "Architecture approved by security and compliance teams",
+      "99.95% uptime verified in staging (RTO/RPO validated)",
+      "Sub-200ms p99 latency at 10K concurrent users",
+      "Real-time inventory sync <500ms latency",
+      "GDPR compliance verified (data residency, encryption, audit logging)",
+      "SOC 2 Type II controls documented and operational",
+      "Monthly infrastructure cost ≤$30,000",
+      "95% of infrastructure defined as code (Terraform)",
+      "All acceptance criteria in 8 deliverables signed off",
+      "Team trained on incident response and on-call procedures"
+    ],
+    "sign_off": {
+      "client_name": "Client / Project Sponsor",
+      "client_email": "ratthanin.pu@gmail.com",
+      "architect_name": "AWS Solutions Architect",
+      "approval_date": "TBD",
+      "notes": "SOW requires stakeholder approval before Phase 1 commences. Any scope changes after Phase 1 sign-off will be documented in a change order."
+    }
+  }
+}
