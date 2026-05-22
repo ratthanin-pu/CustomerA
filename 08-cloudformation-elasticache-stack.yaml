@@ -1,0 +1,142 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Description: 'ElastiCache Redis Stack - E-commerce-3 Platform'
+
+Parameters:
+  ProjectName:
+    Type: String
+    Default: ecommerce-3
+
+  Environment:
+    Type: String
+    Default: production
+
+  PrivateSubnetIds:
+    Type: CommaDelimitedList
+    Description: Private subnet IDs for cache cluster
+
+  ElastiCacheSecurityGroupId:
+    Type: String
+    Description: Security group ID for ElastiCache
+
+  RedisAuthToken:
+    Type: String
+    NoEcho: true
+    Description: Redis auth token (minimum 32 characters)
+
+  RedisNodeType:
+    Type: String
+    Default: cache.r6g.large
+    AllowedValues:
+      - cache.t3.micro
+      - cache.t3.small
+      - cache.r6g.large
+      - cache.r6g.xlarge
+
+  KMSKeyId:
+    Type: String
+    Description: KMS key ID for encryption
+
+Resources:
+  # ElastiCache Subnet Group
+  CacheSubnetGroup:
+    Type: AWS::ElastiCache::SubnetGroup
+    Properties:
+      Description: Subnet group for ElastiCache
+      SubnetIds: !Ref PrivateSubnetIds
+      Tags:
+        - Key: Name
+          Value: !Sub '${ProjectName}-cache-subnet-group'
+
+  # Redis Cluster
+  RedisCluster:
+    Type: AWS::ElastiCache::CacheCluster
+    Properties:
+      CacheClusterId: !Sub '${ProjectName}-redis'
+      Engine: redis
+      EngineVersion: '7.0'
+      CacheNodeType: !Ref RedisNodeType
+      NumCacheNodes: 3
+      CacheSubnetGroupName: !Ref CacheSubnetGroup
+      VpcSecurityGroupIds:
+        - !Ref ElastiCacheSecurityGroupId
+      Port: 6379
+      AutomaticFailoverEnabled: true
+      MultiAZEnabled: true
+      SnapshotRetentionLimit: 7
+      SnapshotWindow: '03:00-05:00'
+      AtRestEncryptionEnabled: true
+      KmsKeyId: !Ref KMSKeyId
+      TransitEncryptionEnabled: true
+      AuthToken: !Ref RedisAuthToken
+      LogDeliveryConfigurations:
+        - DestinationType: cloudwatch-logs
+          DestinationName: !Ref RedisLogGroup
+          Enabled: true
+          LogFormat: json
+      NotificationTopicStatus: enabled
+      NotificationTopicArn: !Sub 'arn:aws:sns:${AWS::Region}:${AWS::AccountId}:${ProjectName}-notifications'
+      PreferredMaintenanceWindow: 'sun:04:00-sun:05:00'
+      Tags:
+        - Key: Name
+          Value: !Sub '${ProjectName}-redis'
+        - Key: Environment
+          Value: !Ref Environment
+
+  # CloudWatch Log Group for Redis
+  RedisLogGroup:
+    Type: AWS::Logs::LogGroup
+    Properties:
+      LogGroupName: !Sub '/aws/elasticache/${ProjectName}-redis'
+      RetentionInDays: 7
+
+  # CloudWatch Alarms
+  RedisCPUAlarm:
+    Type: AWS::CloudWatch::Alarm
+    Properties:
+      AlarmName: !Sub '${ProjectName}-redis-cpu-high'
+      AlarmDescription: Redis CPU utilization is high
+      MetricName: CPUUtilization
+      Namespace: AWS/ElastiCache
+      Statistic: Average
+      Period: 300
+      EvaluationPeriods: 2
+      Threshold: 75
+      ComparisonOperator: GreaterThanThreshold
+      Dimensions:
+        - Name: CacheClusterId
+          Value: !Ref RedisCluster
+
+  RedisEvictionsAlarm:
+    Type: AWS::CloudWatch::Alarm
+    Properties:
+      AlarmName: !Sub '${ProjectName}-redis-evictions'
+      AlarmDescription: Redis memory evictions detected
+      MetricName: Evictions
+      Namespace: AWS/ElastiCache
+      Statistic: Sum
+      Period: 300
+      EvaluationPeriods: 1
+      Threshold: 1
+      ComparisonOperator: GreaterThanOrEqualToThreshold
+      Dimensions:
+        - Name: CacheClusterId
+          Value: !Ref RedisCluster
+
+Outputs:
+  CacheClusterId:
+    Description: Redis cluster ID
+    Value: !Ref RedisCluster
+    Export:
+      Name: !Sub '${ProjectName}-RedisClusterId'
+
+  CacheNodeAddress:
+    Description: Redis primary endpoint
+    Value: !GetAtt RedisCluster.RedisEndpoint.Address
+    Export:
+      Name: !Sub '${ProjectName}-RedisEndpoint'
+
+  CachePort:
+    Description: Redis port
+    Value: !GetAtt RedisCluster.RedisEndpoint.Port
+    Export:
+      Name: !Sub '${ProjectName}-RedisPort'
