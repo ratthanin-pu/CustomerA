@@ -1,0 +1,232 @@
+{
+  "sow": {
+    "project_name": "E-Commerce-3 Platform",
+    "version": "1.0",
+    "date": "2026-05-26",
+    "objective": "Design, build, and deploy a production-grade AWS e-commerce platform for 5,000 concurrent users with 1 million product catalog, real-time async inventory, Stripe payment processing, and 99.95% HA across 3 Availability Zones in ap-southeast-7 (Thailand) using AWS Landing Zone architecture.",
+    "scope": {
+      "in_scope": [
+        "AWS Landing Zone setup (4 accounts: Management, Log Archive, Audit, Shared Services, Production)",
+        "VPC design: 3 AZs, 9 subnets (public/private app/private DB per AZ)",
+        "ECS on EC2 cluster with 6 m5.2xlarge nodes (2 per AZ)",
+        "7 containerized microservices deployment",
+        "Aurora PostgreSQL Multi-AZ (1 writer + 2 read replicas)",
+        "ElastiCache Redis Multi-AZ (1 primary + 2 replicas)",
+        "OpenSearch 3-node cluster for 1M product catalog",
+        "SQS queues for async inventory and order events",
+        "CloudFront CDN + WAF (OWASP rules)",
+        "ALB with path-based routing across 3 AZs",
+        "S3 for static assets and product images",
+        "CI/CD pipeline: CodePipeline + CodeBuild + ECR",
+        "Security: KMS, Secrets Manager, VPC Flow Logs, CloudTrail, GuardDuty",
+        "Monitoring: CloudWatch, X-Ray, SNS alerts",
+        "Stripe payment integration (HTTPS webhooks)",
+        "Load testing (5,000 concurrent users)"
+      ],
+      "out_of_scope": [
+        "Mobile application development",
+        "Third-party logistics (3PL) integration",
+        "Local Thai payment gateways (PromptPay, etc.)",
+        "Data analytics / BI dashboards",
+        "ERP / inventory management back-office systems",
+        "Disaster Recovery to secondary region"
+      ]
+    },
+    "deliverables": [
+      {
+        "id": "D1",
+        "name": "Architecture Design Document",
+        "description": "Full architecture specification including network design, service selection rationale, security controls, cost breakdown, and implementation roadmap",
+        "format": "Markdown + Draw.io diagram",
+        "due_week": 1
+      },
+      {
+        "id": "D2",
+        "name": "Draw.io Architecture Diagram",
+        "description": "Production-grade Draw.io XML diagram with AWS Landing Zone, 3-AZ VPC, all services, and data flow arrows",
+        "format": ".drawio file",
+        "due_week": 1
+      },
+      {
+        "id": "D3",
+        "name": "Landing Zone Configuration",
+        "description": "AWS Control Tower deployment with 4 accounts, SCPs, IAM Identity Center, Transit Gateway",
+        "format": "CloudFormation templates",
+        "due_week": 2
+      },
+      {
+        "id": "D4",
+        "name": "Infrastructure as Code (IaC)",
+        "description": "CloudFormation/Terraform templates for VPC, ECS cluster, Aurora, ElastiCache, OpenSearch, ALB, CloudFront, WAF, SQS",
+        "format": "CloudFormation YAML / Terraform HCL",
+        "due_week": 5
+      },
+      {
+        "id": "D5",
+        "name": "Containerized Microservices",
+        "description": "7 Docker container images deployed to ECR and running on ECS across 3 AZs",
+        "format": "Docker images + ECS task definitions",
+        "due_week": 9
+      },
+      {
+        "id": "D6",
+        "name": "CI/CD Pipeline",
+        "description": "CodePipeline + CodeBuild pipeline for automated build, test, and ECS deployment",
+        "format": "CodePipeline configuration",
+        "due_week": 8
+      },
+      {
+        "id": "D7",
+        "name": "SOC 2 / CIS Compliance Checklist",
+        "description": "Completed compliance checklist mapping AWS controls to SOC 2 Type II and CIS AWS Foundations Benchmark",
+        "format": "JSON",
+        "due_week": 2
+      },
+      {
+        "id": "D8",
+        "name": "Load Test Report",
+        "description": "Results of 5,000 concurrent user load test including p95/p99 latency, error rate, and auto-scaling behavior",
+        "format": "PDF report",
+        "due_week": 11
+      },
+      {
+        "id": "D9",
+        "name": "Operations Runbook",
+        "description": "Day-2 operations guide: scaling procedures, failover playbooks, backup/restore, incident response",
+        "format": "Markdown / Confluence",
+        "due_week": 12
+      }
+    ],
+    "timeline": {
+      "start_date": "2026-06-02",
+      "end_date": "2026-08-25",
+      "total_weeks": 12,
+      "phases": [
+        {
+          "phase": 1,
+          "name": "Design, Planning & Landing Zone",
+          "start_week": 1,
+          "end_week": 3,
+          "start_date": "2026-06-02",
+          "end_date": "2026-06-20",
+          "deliverables": ["D1", "D2", "D3", "D7"],
+          "activities": [
+            "Finalize architecture design",
+            "Create Draw.io diagrams",
+            "Deploy AWS Control Tower",
+            "Configure 4-account Landing Zone",
+            "Set up SCPs and IAM Identity Center",
+            "Configure CloudTrail, Config, GuardDuty",
+            "Security baseline and compliance review"
+          ],
+          "resources": 2
+        },
+        {
+          "phase": 2,
+          "name": "Infrastructure Deployment",
+          "start_week": 3,
+          "end_week": 7,
+          "start_date": "2026-06-16",
+          "end_date": "2026-07-14",
+          "deliverables": ["D4"],
+          "activities": [
+            "Deploy VPC (3 AZs, 9 subnets)",
+            "Deploy Aurora PostgreSQL Multi-AZ",
+            "Deploy ElastiCache Redis cluster",
+            "Deploy OpenSearch 3-node cluster",
+            "Configure ALB and Security Groups",
+            "Deploy CloudFront + WAF",
+            "Deploy ECS clusters on EC2",
+            "Configure SQS queues with DLQs",
+            "Set up Secrets Manager and KMS"
+          ],
+          "resources": 2
+        },
+        {
+          "phase": 3,
+          "name": "Application Development & Deployment",
+          "start_week": 7,
+          "end_week": 10,
+          "start_date": "2026-07-14",
+          "end_date": "2026-08-04",
+          "deliverables": ["D5", "D6"],
+          "activities": [
+            "Deploy ECR repositories",
+            "Build and push all 7 microservice Docker images",
+            "Configure ECS task definitions and services",
+            "Set up CodePipeline + CodeBuild CI/CD",
+            "Integrate Stripe payment API",
+            "Index 1M products into OpenSearch",
+            "Configure Redis session management",
+            "End-to-end integration testing"
+          ],
+          "resources": 2
+        },
+        {
+          "phase": 4,
+          "name": "Testing, Hardening & Go-Live",
+          "start_week": 10,
+          "end_week": 12,
+          "start_date": "2026-08-04",
+          "end_date": "2026-08-25",
+          "deliverables": ["D8", "D9"],
+          "activities": [
+            "Load testing (5,000 concurrent users with k6)",
+            "Security penetration testing",
+            "Auto Scaling policy tuning",
+            "CloudWatch dashboards and alerts",
+            "Disaster recovery drill (Aurora failover)",
+            "Documentation and runbooks",
+            "Production cutover",
+            "Post-launch monitoring (48h)"
+          ],
+          "resources": 2
+        }
+      ]
+    },
+    "team": {
+      "size": 2,
+      "roles": [
+        {
+          "role": "Lead DevOps / Cloud Engineer",
+          "responsibilities": ["Infrastructure IaC", "ECS/EC2 configuration", "CI/CD pipeline", "Networking and security"]
+        },
+        {
+          "role": "Backend Engineer",
+          "responsibilities": ["Microservices development", "Stripe integration", "OpenSearch indexing", "SQS consumer services"]
+        }
+      ]
+    },
+    "budget": {
+      "infrastructure_monthly_usd": 8810,
+      "budget_ceiling_monthly_usd": 20000,
+      "monthly_buffer_usd": 11190,
+      "one_time_setup_estimate_usd": 5000,
+      "contingency_pct": 15,
+      "cost_optimization_target": "Convert to Reserved Instances after 3 months to save ~35% (~$3,085/month)"
+    },
+    "acceptance_criteria": [
+      "Architecture reviewed and approved by team",
+      "Landing Zone with 4 accounts fully operational",
+      "99.95% availability demonstrated across 3-week monitoring period",
+      "5,000 concurrent users load test passes with p95 response time < 500ms",
+      "All SOC 2 Type II and CIS AWS Foundations controls documented",
+      "Aurora failover completes in < 30 seconds",
+      "Stripe payment integration tested end-to-end",
+      "1M products indexed and searchable in OpenSearch",
+      "Async inventory updates processed within 5 seconds via SQS",
+      "Monthly infrastructure cost confirmed within $20,000 budget",
+      "CI/CD pipeline deploys to ECS without manual intervention",
+      "All secrets stored in Secrets Manager (zero hardcoded credentials)",
+      "VPC Flow Logs, CloudTrail, and GuardDuty active in all accounts"
+    ],
+    "assumptions": [
+      "ap-southeast-7 region has Aurora, ElastiCache, OpenSearch, ECS, SQS available",
+      "Stripe account and API keys available before Week 8",
+      "Product catalog data (1M products) provided in CSV/JSON format before Week 9",
+      "Domain name registered and Route 53 hosted zone created",
+      "AWS accounts with appropriate limits (EC2, RDS, ElastiCache) pre-requested",
+      "No on-premises integration required for v1"
+    ]
+  }
+}
